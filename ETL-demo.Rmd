@@ -1,0 +1,36 @@
+---
+title: "A Production ETL Job Demo"
+author: "Branden Collingsworth"
+date: "11/4/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options("getSymbols.warning4.0" = FALSE)
+
+```
+
+1. Use the quantmod package to get data on S&P 500 price history from Yahoo Finance
+
+```{r extract, message=FALSE}
+library(quantmod)
+spy <- getSymbols('SPY', auto.assign = FALSE)
+```
+
+2. Transform data from xts object to a data.frame
+
+```{r transform}
+spy_transformed <- fortify.zoo(spy)
+```
+
+3. Save data it in a CSV for later
+
+```{r load}
+write.csv(spy_transformed, 'spy.csv')
+```
+
+Success!
+`r nrow(spy_transformed)` rows written to spy.csv at `r Sys.time()`
+
+

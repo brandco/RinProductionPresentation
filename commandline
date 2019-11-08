@@ -1,0 +1,10 @@
+Shell command to run demos
+
+docker build -t rprod https://github.com/brandco/RinProductionPresentation.git
+
+docker run -d --name static -p 4200:4200 rprod
+
+docker run -d --name api -p 8000:8000 -w /usr/src/app rprod Rscript predict-api.R
+
+localhost:4200
+localhost:8000/predict
